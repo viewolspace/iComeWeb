@@ -1,5 +1,6 @@
 package com.icome.web.demo.action;
 
+import com.icome.pojo.User;
 import com.icome.web.common.Response;
 import com.youguu.core.util.json.YouguuJsonHelper;
 import io.swagger.annotations.*;
@@ -8,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * describe:
@@ -27,6 +30,7 @@ import javax.ws.rs.Produces;
 @Controller("demoAction")
 public class DemoAction {
 
+    List<User> list = new ArrayList<>();
     /**
      * 测试接口
      *
@@ -39,7 +43,9 @@ public class DemoAction {
     @ApiResponses(value = {
             @ApiResponse(code = "0000", message = "请求成功", response = Response.class)
     })
+
     public String welcome() {
+
 
         return YouguuJsonHelper.returnJSON("0000", "hello iCome!");
     }
