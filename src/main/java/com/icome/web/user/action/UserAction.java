@@ -1,5 +1,7 @@
 package com.icome.web.user.action;
 
+import com.alibaba.fastjson.JSONObject;
+import com.icome.api.IComeApi;
 import com.icome.pojo.User;
 import com.icome.pojo.query.UserQuery;
 import com.icome.service.IUserService;
@@ -32,6 +34,9 @@ public class UserAction {
     @Resource
     private IUserService userService;
 
+    @Resource
+    private IComeApi comeApi;
+
     /**
      * 根据ticket查询用户信息
      *
@@ -46,7 +51,58 @@ public class UserAction {
     })
     public String userDetail(@ApiParam(value = "用户令牌", required = true) @QueryParam("ticket") String ticket) {
 
-        return YouguuJsonHelper.returnJSON("0000", "hello iCome!");
+        JSONObject data = comeApi.getUserDetail(ticket);
+
+        if(data!=null){
+            String eId = data.getString("eId");
+            User user = userService.getUser(eId);
+            if(user!=null){
+                return YouguuJsonHelper.returnJSON("0000","ok",user);
+            }
+
+        }
+
+        return YouguuJsonHelper.returnJSON("0001","获取用户数据出错");
+
+
+    }
+
+    /**
+     * 用户签到
+     *
+     * @return
+     */
+    @GET
+    @Path(value = "/signed")
+    @Produces("text/html;charset=UTF-8")
+    @ApiOperation(value = "查询用户基本数据", notes = "查询用户基本数据", author = "更新于 2019-01-03")
+    @ApiResponses(value = {
+            @ApiResponse(code = "0000", message = "请求成功", response = Response.class)
+    })
+    public String userSigned(@ApiParam(value = "用户令牌", required = true) @QueryParam("ticket") String ticket) {
+
+        JSONObject data = comeApi.getUserDetail(ticket);
+
+        if(data!=null){
+            String eId = data.getString("eId");
+            User user = userService.getUser(eId);
+            if(user!=null){
+                return YouguuJsonHelper.returnJSON("0000","已经签到",user);
+            }else {
+                user = new User();
+                user.setUrl("http://im2.enn.cn/fileserver/photo/getEmpPhoto?eId=" + eId);
+                user.setUserName(data.getString("eName"));
+                user.setStatus(1);
+                user.setThirdId(eId);
+                userService.saveUser(user);
+                return YouguuJsonHelper.returnJSON("0000","ok",user);
+            }
+
+        }
+
+        return YouguuJsonHelper.returnJSON("0000","ok");
+
+
     }
 
     /**
