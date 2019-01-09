@@ -62,7 +62,7 @@ public class UserAction {
 
         }
 
-        return YouguuJsonHelper.returnJSON("0001","获取用户数据出错");
+        return YouguuJsonHelper.returnJSON("0001","没有绑定用户");
 
 
     }
