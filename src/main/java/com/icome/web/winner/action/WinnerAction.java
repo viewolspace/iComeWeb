@@ -1,5 +1,6 @@
 package com.icome.web.winner.action;
 
+import com.alibaba.fastjson.JSONObject;
 import com.icome.pojo.Winners;
 import com.icome.service.IWinnersService;
 import com.icome.web.common.Response;
@@ -52,6 +53,37 @@ public class WinnerAction {
         } catch (Exception e) {
             return YouguuJsonHelper.returnJSON("0001", "查询失败，请重试");
         }
+    }
+
+
+
+    /**
+     * 查询是否中奖
+     *
+     * @return
+     */
+    @GET
+    @Path(value = "/isWinner")
+    @Produces("text/html;charset=UTF-8")
+    @ApiOperation(value = "查询是否中奖", notes = "查询是否中奖", author = "更新于 2019-01-03")
+    @ApiResponses(value = {
+            @ApiResponse(code = "0000", message = "请求成功", response = Response.class)
+    })
+    public String isWinner(@ApiParam(value = "用户id", required = true) @QueryParam("userId") int userId) {
+
+        JSONObject json = new JSONObject();
+        json.put("status","0000");
+        json.put("message","ok");
+
+        Winners winners = winnersService.getWinners(userId);
+
+        if(winners!=null){
+            json.put("result",winners);
+        }
+
+        return json.toJSONString();
+
+
     }
 
 }
