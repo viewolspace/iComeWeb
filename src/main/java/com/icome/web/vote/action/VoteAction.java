@@ -89,6 +89,15 @@ public class VoteAction {
                        @ApiParam(value = "节目id", required = true) @QueryParam("id") int id) {
 
         JSONObject result  = new JSONObject();
+
+        if(ticket==null || "".equals(ticket)){
+            result.put("status","0001");
+
+            result.put("message","无效投票");
+
+            return result.toJSONString();
+        }
+
         result.put("status","0000");
 
         result.put("message","投票成功");
