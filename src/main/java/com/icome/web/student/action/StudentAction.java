@@ -1,4 +1,4 @@
-package com.xa.com.web.student;
+package com.icome.web.student.action;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
