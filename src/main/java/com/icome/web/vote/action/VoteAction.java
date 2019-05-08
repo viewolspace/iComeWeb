@@ -107,7 +107,7 @@ public class VoteAction {
         if(data==null || "".equals(data)){
             result.put("status","0001");
 
-            result.put("message","无效投票");
+            result.put("message","请稍后再尝试投票");
 
             return result.toJSONString();
         }
