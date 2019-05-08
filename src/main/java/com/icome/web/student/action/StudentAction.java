@@ -119,7 +119,7 @@ public class StudentAction {
 
                 if(securityCode==null || "".equals(securityCode) || !securityCode.equals(rand)){
                         json.put("status","0000");
-                        json.put("message","用户已存在");
+                        json.put("message","验证码错误");
                         return json.toJSONString();
                 }
                 student = new Student();
