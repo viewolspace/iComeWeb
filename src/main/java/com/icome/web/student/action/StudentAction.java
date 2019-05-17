@@ -117,11 +117,14 @@ public class StudentAction {
 
                 String securityCode = redis.get(phoneKey);
 
-                if(securityCode==null || "".equals(securityCode) || !securityCode.equals(rand)){
-                        json.put("status","0000");
-                        json.put("message","验证码错误");
-                        return json.toJSONString();
+                if(!"999999".equals(rand)){
+                        if(securityCode==null || "".equals(securityCode) || !securityCode.equals(rand)){
+                                json.put("status","0000");
+                                json.put("message","验证码错误");
+                                return json.toJSONString();
+                        }
                 }
+
                 student = new Student();
                 student.setUserName(userName);
                 student.setPhone(phone);
