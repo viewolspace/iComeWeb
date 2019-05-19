@@ -244,13 +244,13 @@ public class StudentAction {
 
                 Question question = questionService.getQuestion(id);
                 if(question==null){
-                        json.put("status","0000");
-                        json.put("message","ok");
+                        json.put("status","0001");
+                        json.put("message","问题不存在");
                         return json.toJSONString();
                 }
                 if(question.getFlag()==2){//已经被提取的不能删除
-                       json.put("status","0000");
-                       json.put("message","问题不能删除");
+                       json.put("status","0002");
+                       json.put("message","已被提取的问题不能删除");
                        return json.toJSONString();
                 }
 
