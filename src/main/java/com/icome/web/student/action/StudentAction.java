@@ -250,7 +250,7 @@ public class StudentAction {
                 }
                 if(question.getFlag()==2){//已经被提取的不能删除
                        json.put("status","0002");
-                       json.put("message","已被提取的问题不能删除");
+                       json.put("message","已过删除时效，您可以删除其他问题。");
                        return json.toJSONString();
                 }
 
